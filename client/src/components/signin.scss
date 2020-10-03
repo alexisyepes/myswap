@@ -1,0 +1,59 @@
+.container__signinPage {
+  /* height: 100vh; */
+  margin: 0 auto;
+  width: 60%;
+  margin-bottom: 0;
+}
+
+.signin-input {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.form-box-signin {
+  border: 1px solid white;
+  border-radius: 10px;
+  background: rgb(0, 0, 0);
+  opacity: 0.9;
+  color: white;
+  margin-bottom: 30px;
+  margin-top: 60px;
+  padding: 30px;
+  height: 100%;
+}
+
+.login-btn {
+  background-color: rgba(42, 163, 163, 0.952);
+  color: white;
+  padding: 6px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  display: block;
+  width: 60%;
+  margin: 10px auto;
+}
+
+.form-signin {
+  margin-bottom: 10px;
+}
+
+.logo-signin-form {
+  width: 30%;
+  margin-top: 7px;
+  margin-left: 35%;
+  margin-right: 35%;
+}
+
+.signin-form-err-msg {
+  text-align: center;
+  color: yellow;
+  padding-bottom: 10px;
+  margin-top: 15px;
+}
+
+.signin-title {
+  text-align: center;
+  margin-top: 15px;
+}
