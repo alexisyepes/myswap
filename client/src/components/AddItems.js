@@ -14,6 +14,7 @@ class AddItems extends Component {
       itemStatus: "",
       itemReadyForPhoto: false,
       showInputForm: true,
+      loadingAxiosRequest: false,
     };
   }
 
@@ -28,6 +29,50 @@ class AddItems extends Component {
       itemImg: event.target.files[0],
     });
     this.fileUploadHandler();
+  };
+
+  fileUploadHandler = async () => {
+    if (!this.state.itemImg) {
+      return;
+    }
+    const itemId = this.state.itemId;
+    const fd = new FormData();
+    fd.append("file", this.state.itemImg);
+    fd.append("upload_preset", "myswap");
+    this.setState({
+      loadingAxiosRequest: true,
+    });
+
+    await axios
+      .post("	https://api.cloudinary.com/v1_1/myswapaplicacion/upload", fd)
+      .then(async (res) => {
+        let newItemImg = {
+          itemImg: res.data.secure_url,
+        };
+        await axios
+          .put("/auth/item/" + itemId, newItemImg)
+          .then(() => {
+            // console.log(res);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error.response);
+            if (error.response.status === 500 || error) {
+              console.log(error);
+              // this.errorOnPhotoUpload();
+              this.setState({
+                loadingAxiosRequest: false,
+              });
+            }
+          });
+      })
+      .catch((err) => {
+        this.errorOnPhotoUpload();
+        this.setState({
+          loadingAxiosRequest: false,
+        });
+        console.log(err);
+      });
   };
 
   submitItemHandler = async (e) => {
@@ -64,65 +109,74 @@ class AddItems extends Component {
   render() {
     return (
       <div>
-        {this.state.showInputForm ? (
-          <form className="add-items-form" onSubmit={this.submitItemHandler}>
-            <input
-              className="input-add-items"
-              name="itemName"
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Nombre de producto"
-            />
-            <textarea
-              className="input-add-items"
-              name="description"
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Descripcion"
-            />
-            <input
-              className="input-add-items"
-              name="category"
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Categoria"
-            />
-            <input
-              className="input-add-items"
-              name="itemPrice"
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Valor aprox. en el mercado"
-            />
-            <input
-              className="input-add-items"
-              name="itemStatus"
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Status"
-            />
-            <button className="btn-submit-addItems">Añada producto</button>
-          </form>
-        ) : null}
-        {this.state.itemReadyForPhoto ? (
+        {this.state.loadingAxiosRequest ? (
+          <div>Por favor espere...</div>
+        ) : (
           <div>
-            <button
-              className="add-photo-btn"
-              onClick={() => {
-                this.fileInput.click();
-              }}
-            >
-              Añadir foto <i className="fas fa-camera-retro"></i>
-            </button>
-            <input
-              style={{ display: "none" }}
-              type="file"
-              capture="environment"
-              onChange={this.fileSelectedHandler}
-              ref={(fileInput) => (this.fileInput = fileInput)}
-            />
+            {this.state.showInputForm ? (
+              <form
+                className="add-items-form"
+                onSubmit={this.submitItemHandler}
+              >
+                <input
+                  className="input-add-items"
+                  name="itemName"
+                  onChange={this.onChangeHandler}
+                  type="text"
+                  placeholder="Nombre de producto"
+                />
+                <textarea
+                  className="input-add-items"
+                  name="description"
+                  onChange={this.onChangeHandler}
+                  type="text"
+                  placeholder="Descripcion"
+                />
+                <input
+                  className="input-add-items"
+                  name="category"
+                  onChange={this.onChangeHandler}
+                  type="text"
+                  placeholder="Categoria"
+                />
+                <input
+                  className="input-add-items"
+                  name="itemPrice"
+                  onChange={this.onChangeHandler}
+                  type="text"
+                  placeholder="Valor aprox. en el mercado"
+                />
+                <input
+                  className="input-add-items"
+                  name="itemStatus"
+                  onChange={this.onChangeHandler}
+                  type="text"
+                  placeholder="Status"
+                />
+                <button className="btn-submit-addItems">Añada producto</button>
+              </form>
+            ) : null}
+            {this.state.itemReadyForPhoto ? (
+              <div>
+                <button
+                  className="add-photo-btn"
+                  onClick={() => {
+                    this.fileInput.click();
+                  }}
+                >
+                  Añadir foto <i className="fas fa-camera-retro"></i>
+                </button>
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  capture="environment"
+                  onChange={this.fileSelectedHandler}
+                  ref={(fileInput) => (this.fileInput = fileInput)}
+                />
+              </div>
+            ) : null}
           </div>
-        ) : null}
+        )}
       </div>
     );
   }
