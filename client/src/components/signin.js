@@ -22,10 +22,11 @@ class SignIn extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     if (email === "" || password === "") {
-      this.setState({
+      return this.setState({
         showError: false,
         showNullError: true,
         loggedIn: false,
+        errorMessage: "Llene los campos primero!",
       });
     } else {
       try {
@@ -37,12 +38,7 @@ class SignIn extends Component {
         localStorage.setItem("JWT", response.data.token);
         localStorage.setItem("USERNAME", response.data.username);
         localStorage.setItem("USERTYPE", response.data.userType);
-        // if (response.data.userType === "admin") {
-        //   window.location.href = "/auth/admin";
-        // }
-        // if (response.data.userType === "client") {
-        //   window.location.href = "/auth/profile";
-        // }
+
         if (response.data.userType === "admin") {
           window.location.href = "/auth/admin_profile";
         } else {

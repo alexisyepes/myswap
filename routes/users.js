@@ -84,18 +84,24 @@ router.post("/login", function (req, res, next) {
         where: {
           email: req.body.email,
         },
-      }).then((user) => {
-        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-          expiresIn: "1d",
-        });
-        res.status(200).send({
-          // auth: true,
-          token,
-          userType: user.userType,
-          username: user.username,
-          firstName: user.firstName,
-        });
-      });
+      })
+        .then((user) => {
+          const token = jwt.sign(
+            { email: user.email },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "1d",
+            }
+          );
+          res.status(200).send({
+            // auth: true,
+            token,
+            userType: user.userType,
+            username: user.username,
+            firstName: user.firstName,
+          });
+        })
+        .catch((err) => console.log(err));
     });
   })(req, res, next);
 });
@@ -133,6 +139,15 @@ router.get(
   }
 );
 
+//Get all items
+router.get("/items", (req, res) => {
+  Item.findAll({})
+    .then(function (dbUser) {
+      res.json(dbUser);
+    })
+    .catch((err) => console.log(err));
+});
+
 //Getting one single User with items and comments
 router.get(
   "/user/:id",
@@ -152,46 +167,60 @@ router.get(
           include: [{ model: Comment }],
         },
       ],
-    }).then((dbUser) => {
-      let updatedUser = {
-        id: dbUser.id,
-        firstName: dbUser.firstName,
-        lastName: dbUser.lastName,
-        username: dbUser.username,
-        email: dbUser.email,
-        userType: dbUser.userType,
+    })
+      .then((dbUser) => {
+        let updatedUser = {
+          id: dbUser.id,
+          firstName: dbUser.firstName,
+          lastName: dbUser.lastName,
+          username: dbUser.username,
+          email: dbUser.email,
+          userType: dbUser.userType,
 
-        Items: dbUser.Items.map((item) => {
-          return {
-            id: item.id,
-            itemName: item.itemName,
-            description: item.description,
-            category: item.category,
-            itemPrice: item.itemPrice,
-            itemStatus: item.itemStatus,
-            itemImg: item.itemImg,
-            UserId: item.UserId,
-            Comments: item.Comments.map((comment) => {
-              return {
-                id: comment.id,
-                date: comment.date,
-                comment: comment.comment,
-                interest: comment.interest,
-                userId: comment.userId,
-              };
-            }),
-          };
-        }),
-      };
+          Items: dbUser.Items.map((item) => {
+            return {
+              id: item.id,
+              itemName: item.itemName,
+              description: item.description,
+              category: item.category,
+              itemPrice: item.itemPrice,
+              itemStatus: item.itemStatus,
+              itemImg: item.itemImg,
+              UserId: item.UserId,
+              Comments: item.Comments.map((comment) => {
+                return {
+                  id: comment.id,
+                  date: comment.date,
+                  comment: comment.comment,
+                  interest: comment.interest,
+                  userId: comment.userId,
+                };
+              }),
+            };
+          }),
+        };
 
-      // console.log(updatedUser);
-      res.json(updatedUser);
-    });
+        // console.log(updatedUser);
+        res.json(updatedUser);
+      })
+      .catch((err) => console.log(err));
   }
 );
 
-router.put("/customer/:id", (req, res) => {
-  User.update(
+router.get("/item/:id", (req, res) => {
+  return Item.findOne({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(function (dbItem) {
+      res.json(dbItem);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.put("/item/:id", (req, res) => {
+  Item.update(
     {
       ...req.body,
     },
@@ -200,9 +229,11 @@ router.put("/customer/:id", (req, res) => {
         id: req.params.id,
       },
     }
-  ).then(function (dbEmployee) {
-    res.json(dbEmployee);
-  });
+  )
+    .then(function (dbItem) {
+      res.json(dbItem);
+    })
+    .catch((err) => console.log(err));
 });
 
 // POST route for saving a new Item to one user
@@ -224,6 +255,21 @@ router.post("/comments/:ItemId", function (req, res) {
   Comment.create({
     ...req.body,
     ItemId: req.params.ItemId,
+  })
+    .then(function (dbComment) {
+      res.json(dbComment);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
+
+// POST route for deleting a Comment
+router.delete("/comments/:id", function (req, res) {
+  Comment.destroy({
+    where: {
+      id: req.params.id,
+    },
   })
     .then(function (dbComment) {
       res.json(dbComment);

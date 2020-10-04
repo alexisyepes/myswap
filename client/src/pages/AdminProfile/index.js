@@ -121,6 +121,7 @@ class Profile extends Component {
                   <li>Apellido: {user.lastName}</li>
                   <li>Email: {user.email}</li>
                 </ul>
+                <hr />
               </div>
             );
           })

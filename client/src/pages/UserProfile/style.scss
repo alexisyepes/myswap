@@ -1,13 +1,55 @@
 .item-img {
   width: 300px;
+  height: 200px;
   margin: 0 auto;
   display: block;
   border-radius: 10px;
 }
 
 .item-title,
-.mis-productos-title {
+.mis-productos-title,
+.no-comments,
+.comments-title {
   text-align: center;
+}
+
+.img-to-edit {
+  width: 150px;
+  border-radius: 5px;
+  display: block;
+  margin: 5px auto;
+}
+
+.x-close-modal {
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  float: right;
+  margin-top: -5px;
+  margin-right: -5px;
+  // border: 1px black solid;
+  padding: 2px 3px;
+  border-radius: 5px;
+  background-color: rgb(31, 31, 31);
+  color: rgb(255, 255, 255);
+
+  &:hover {
+    color: red;
+    transform: rotate(180deg);
+  }
+}
+
+.comments-users-container {
+  padding: 2px;
+  color: white;
+  background-color: rgb(22, 115, 158);
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.no-comments {
+  color: green;
 }
 
 .items-wrapper {
@@ -22,17 +64,57 @@
   box-shadow: 0px 5px 5px grey;
 }
 
-.edit-item-btn {
+.decription-items {
+  max-width: 350px;
+}
+
+.btn {
   cursor: pointer;
-  display: block;
-  width: 100%;
   padding: 5px;
   font-size: 18px;
   border-radius: 5px;
-  background-color: rgb(15, 54, 13);
-  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
 
   &:hover {
     filter: brightness(1.8);
   }
+}
+
+.change-photo-btn {
+  margin: 0 auto;
+  display: block;
+}
+
+.comment-section {
+  background-color: rgb(221, 232, 233);
+  padding: 1px 10px;
+  margin-bottom: 5px;
+}
+
+.delete-comment-btn {
+  color: red;
+  cursor: pointer;
+}
+
+.ver-comentarios-btn {
+  background-color: rgb(13, 38, 54);
+  color: white;
+  display: block;
+  width: 100%;
+}
+
+.edit-item-btn {
+  background-color: rgb(15, 54, 13);
+  color: white;
+  display: block;
+  width: 100%;
+}
+
+.add-item-btn {
+  background-color: rgb(255, 233, 30);
+  color: rgb(0, 0, 0);
+  font-weight: 200;
+  border: 1px solid rgb(204, 204, 204);
+  box-shadow: 0px 5px 5px rgb(177, 177, 177);
 }

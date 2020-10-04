@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      userName: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       timestamps: false,

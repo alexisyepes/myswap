@@ -89,6 +89,7 @@ module.exports = function (passport) {
                       comment: comment.comment,
                       interest: comment.interest,
                       userId: comment.userId,
+                      userName: comment.userName,
                     };
                   }),
                 };

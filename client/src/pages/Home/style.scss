@@ -1,7 +1,15 @@
 .container__home {
-  padding: 20px;
+  padding-top: 20px;
   text-align: center;
-  width: 90%;
+  width: 100%;
   display: block;
   margin: 0 auto;
+  background-image: linear-gradient(
+      rgba(213, 230, 236, 0.45),
+      rgba(219, 239, 240, 0.45)
+    ),
+    url(/images/colombia-flag.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }

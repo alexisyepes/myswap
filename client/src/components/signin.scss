@@ -2,7 +2,7 @@
   /* height: 100vh; */
   margin: 0 auto;
   width: 60%;
-  margin-bottom: 0;
+  display: block;
 }
 
 .signin-input {
@@ -13,26 +13,35 @@
 }
 
 .form-box-signin {
-  border: 1px solid white;
+  border: 2px solid rgb(187, 187, 187);
   border-radius: 10px;
-  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.904);
   opacity: 0.9;
   color: white;
-  margin-bottom: 30px;
-  margin-top: 60px;
+  margin: 0 auto;
   padding: 30px;
   height: 100%;
+  width: 70%;
 }
 
 .login-btn {
+  outline: 0;
   background-color: rgba(42, 163, 163, 0.952);
   color: white;
   padding: 6px 20px;
   font-size: 18px;
   border-radius: 5px;
+  border: none;
   display: block;
-  width: 60%;
+  width: 50%;
   margin: 10px auto;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: brightness(1.8);
+    transform: scale(1.05);
+  }
 }
 
 .form-signin {
