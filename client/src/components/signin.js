@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import axios from "axios";
 import "./signin.scss";
 
@@ -34,10 +33,10 @@ class SignIn extends Component {
           email,
           password,
         });
-        console.log(response);
         localStorage.setItem("JWT", response.data.token);
         localStorage.setItem("USERNAME", response.data.username);
         localStorage.setItem("USERTYPE", response.data.userType);
+        localStorage.setItem("USER", response.data.userId);
 
         if (response.data.userType === "admin") {
           window.location.href = "/auth/admin_profile";
@@ -64,7 +63,7 @@ class SignIn extends Component {
         <div className=" form-box-signin">
           <form className="form-signin" onSubmit={this.handleSubmit.bind(this)}>
             <h2 className="signin-title">
-              <i className="fas fa-lock"></i> - Users Sign In{" "}
+              <i className="fas fa-lock"></i> Ingreso - Usuarios
             </h2>
             <hr />
             <label htmlFor="email">* Email</label>
@@ -83,7 +82,7 @@ class SignIn extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            <button className="login-btn">Login</button>
+            <button className="login-btn">Ingresar</button>
             <h4 className="signin-form-err-msg">{this.state.errorMessage}</h4>
           </form>
         </div>

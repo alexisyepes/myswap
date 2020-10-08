@@ -4,12 +4,45 @@
   width: 100%;
   display: block;
   margin: 0 auto;
-  background-image: linear-gradient(
-      rgba(213, 230, 236, 0.45),
-      rgba(219, 239, 240, 0.45)
-    ),
-    url(/images/colombia-flag.jpg);
-  background-size: cover;
-  background-position: center;
+
   height: 100vh;
+
+  .home-main-heading {
+    float: left;
+    font-size: 25px;
+    margin-left: 20px;
+  }
+
+  .signin-component-wrapper {
+    margin-top: 20px;
+  }
+}
+
+.item-home-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  .item-container-home {
+    margin: 20px;
+    background-color: rgb(244, 248, 247);
+    width: 20%;
+    height: 400px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 5px grey;
+    overflow: auto;
+
+    .items-home-info {
+      width: 80%;
+      text-align: left;
+      margin: 5px auto;
+    }
+
+    .item-img-home {
+      width: 50%;
+      height: 50%;
+      border-radius: 5px;
+      border: 4px solid rgb(187, 189, 192);
+    }
+  }
 }

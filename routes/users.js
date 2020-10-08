@@ -36,7 +36,10 @@ router.post(
         },
       }).then((user) => {
         if (user) {
-          res.send("Email already exists!");
+          return res.send({
+            status: 400,
+            message: "Email ya existe! Inicie sesion, o use un email diferente",
+          });
         } else {
           const encryptedPassword = bcrypt.hashSync(password, salt);
 
@@ -99,6 +102,7 @@ router.post("/login", function (req, res, next) {
             userType: user.userType,
             username: user.username,
             firstName: user.firstName,
+            userId: user.id,
           });
         })
         .catch((err) => console.log(err));
@@ -241,6 +245,21 @@ router.post("/user/:UserId", function (req, res) {
   Item.create({
     ...req.body,
     UserId: req.params.UserId,
+  })
+    .then(function (dbItem) {
+      res.json(dbItem);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
+
+// POST route for deleting an Item
+router.delete("/item/:itemId", function (req, res) {
+  Item.destroy({
+    where: {
+      id: req.params.itemId,
+    },
   })
     .then(function (dbItem) {
       res.json(dbItem);

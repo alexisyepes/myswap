@@ -83,13 +83,6 @@ class Profile extends Component {
     });
   };
 
-  //Logout User
-  handleLogOut = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("JWT");
-    window.location.href = "/";
-  };
-
   deleteComment = async ({ currentTarget }) => {
     const id = currentTarget.value;
     if (
@@ -225,6 +218,22 @@ class Profile extends Component {
     this.fileUploadHandler();
   };
 
+  deleteItem = async ({ currentTarget }) => {
+    const UserId = currentTarget.value;
+    if (
+      window.confirm(
+        "Esta seguro que desa borrar este articulo? Tenga en cuenta que esta accion es permanente!"
+      )
+    ) {
+      await axios
+        .delete("/auth/item/" + UserId)
+        .then((res) => {
+          window.location.reload();
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   render() {
     const itemsList =
       this.state.items.length > 0 ? (
@@ -237,7 +246,8 @@ class Profile extends Component {
                     <p>Fecha: {comment.date}</p>
                     <p className="decription-items">
                       Comentario: {comment.comment}
-                      &nbsp;{" "}
+                    </p>
+                    <p className="comments-users-container">
                       <button
                         onClick={this.deleteComment}
                         value={comment.id}
@@ -245,13 +255,10 @@ class Profile extends Component {
                       >
                         <i className="fas fa-trash-alt"></i>
                       </button>
-                      &nbsp;
-                      <span className="comments-users-container">
-                        <span>{comment.userName}</span>
-                        <button>
-                          <i className="fas fa-user"></i> Contactar
-                        </button>
-                      </span>
+                      <span className="ml-2 mr-2">{comment.userName}</span>
+                      <button>
+                        <i className="fas fa-user"></i> Contactar
+                      </button>
                     </p>
                   </div>
                 );
@@ -261,6 +268,14 @@ class Profile extends Component {
             );
           return (
             <div className="item-container" key={item.id}>
+              <button
+                onClick={this.deleteItem}
+                value={item.id}
+                className="btn btn-danger delete-item-btn"
+              >
+                <i className="fas fa-trash-alt"></i>
+              </button>
+
               <h2 className="item-title">{item.itemName}</h2>
               {item.itemImg === "" ? null : (
                 <img
@@ -328,15 +343,9 @@ class Profile extends Component {
     }
 
     return (
-      <div style={{ marginTop: "60px", marginLeft: "60px" }}>
-        <span>
-          <i className="fas fa-user"></i>&nbsp; {this.state.username}
-        </span>{" "}
-        <button className="btn" onClick={this.handleLogOut}>
-          Logout
-        </button>
+      <div style={{ marginTop: "10px", marginLeft: "60px" }}>
         <h2>
-          Bienvenido{" "}
+          Bienvenido/a{" "}
           {this.state.firstName.toUpperCase() +
             " " +
             this.state.lastName.toUpperCase()}

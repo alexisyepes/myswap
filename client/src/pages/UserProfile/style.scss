@@ -13,6 +13,10 @@
   text-align: center;
 }
 
+.delete-item-btn {
+  float: left;
+}
+
 .img-to-edit {
   width: 150px;
   border-radius: 5px;
@@ -61,6 +65,10 @@
 }
 
 .item-container {
+  border: 2px solid rgb(226, 226, 226);
+  max-height: 400px;
+  overflow: auto;
+  margin: 20px auto;
   padding: 20px;
   background: rgb(239, 242, 243);
   box-shadow: 0px 5px 5px grey;

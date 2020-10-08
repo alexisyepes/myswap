@@ -1,0 +1,38 @@
+.form-group-signup {
+  display: grid;
+  margin: 5px auto;
+  padding: 5px;
+  text-align: left;
+  width: 80%;
+
+  .label-form-signup {
+    margin: 10px;
+  }
+
+  .signup-input {
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+}
+
+.signup-btn {
+  outline: 0;
+  background-color: rgba(42, 163, 163, 0.952);
+  color: white;
+  padding: 6px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  display: block;
+  width: 80%;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: brightness(1.8);
+    transform: scale(1.05);
+  }
+}
